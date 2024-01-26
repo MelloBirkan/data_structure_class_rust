@@ -8,15 +8,15 @@ struct Registro {
 }
 
 struct Lista {
-    a: [Registro; MAX] ,
-    nro_elem: u32
+    a: [Registro; MAX],
+    nro_elem: u32,
 }
 
 impl Lista {
     fn new() -> Self {
         Self {
-            a: [Registro {chave: 0}; MAX],
-            nro_elem: 0
+            a: [Registro { chave: 0 }; MAX],
+            nro_elem: 0,
         }
     }
 
@@ -28,7 +28,7 @@ impl Lista {
         print!("Lista [");
         for valor in self.a {
             if valor.chave == 0 {
-                continue
+                continue;
             } else {
                 print!("{} ", valor.chave);
             }
@@ -38,7 +38,9 @@ impl Lista {
 
     fn busca(&self, chave: TIPOCHAVE) -> isize {
         for (i, valor) in self.a.iter().enumerate() {
-            if valor.chave == chave { return i as isize }
+            if valor.chave == chave {
+                return i as isize;
+            }
         }
         -1
     }
@@ -47,20 +49,20 @@ impl Lista {
         if posicao >= MAX || self.nro_elem == MAX as u32 {
             return false;
         }
-            let mut j: usize = self.nro_elem as usize;
-            while j > posicao {
-                self.a[j] = self.a[j-1];
-                j -= 1;
-            }
-            self.a[posicao] = reg;
-            self.nro_elem += 1;
+        let mut j: usize = self.nro_elem as usize;
+        while j > posicao {
+            self.a[j] = self.a[j - 1];
+            j -= 1;
+        }
+        self.a[posicao] = reg;
+        self.nro_elem += 1;
         true
     }
 }
 
 pub fn main() {
     let mut lista: Lista = Lista::new();
-    println!("{}",lista.add(Registro {chave: 12}, 2));
+    println!("{}", lista.add(Registro { chave: 12 }, 2));
 
     println!("{}", lista.busca(12));
     println!("{}", lista.nro_elem());
