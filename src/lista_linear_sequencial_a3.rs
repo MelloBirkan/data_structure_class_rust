@@ -20,24 +20,49 @@ impl Lista {
         }
     }
 
-    fn nroElem(&self) -> u32 {
+    fn nro_elem(&self) -> u32 {
         self.nro_elem
     }
 
     fn print_lista(&self) {
         print!("Lista [");
-        for chave in self.a {
-            if chave.chave == 0 {
+        for valor in self.a {
+            if valor.chave == 0 {
                 continue
             } else {
-                print!("{} ", chave.chave);
+                print!("{} ", valor.chave);
             }
         }
-        print!("]");
+        println!("]");
+    }
+
+    fn busca(&self, chave: TIPOCHAVE) -> isize {
+        for (i, valor) in self.a.iter().enumerate() {
+            if valor.chave == chave { return i as isize }
+        }
+        -1
+    }
+
+    fn add(&mut self, reg: Registro, posicao: usize) -> bool {
+        if posicao >= MAX || self.nro_elem == MAX as u32 {
+            return false;
+        }
+            let mut j: usize = self.nro_elem as usize;
+            while j > posicao {
+                self.a[j] = self.a[j-1];
+                j -= 1;
+            }
+            self.a[posicao] = reg;
+            self.nro_elem += 1;
+        true
     }
 }
 
 pub fn main() {
     let mut lista: Lista = Lista::new();
+    println!("{}",lista.add(Registro {chave: 12}, 2));
+
+    println!("{}", lista.busca(12));
+    println!("{}", lista.nro_elem());
     lista.print_lista();
 }
