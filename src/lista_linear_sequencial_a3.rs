@@ -60,14 +60,15 @@ impl Lista {
     }
 
     fn del(&mut self, valor: TIPOCHAVE) -> bool {
-        let valor_i = match self.busca(valor) {
+        let valor_index = match self.busca(valor) {
             Some(valor) => valor,
             None => return false,
         };
-        let mut j: usize = self.nro_elem as usize;
-        while j > valor_i {
-            self.a[j - 1] = self.a[j];
-            j -= 1;
+        let mut j: usize = valor_index as usize;
+        // Usamos o MAX no lugar do "nrm_elem - 1" se o index for > "nrm_elem - 1"
+        while j < MAX - 1 as usize {
+            self.a[j] = self.a[j + 1];
+            j += 1;
         }
         self.nro_elem -= 1;
         true
@@ -76,7 +77,7 @@ impl Lista {
 
 pub fn main() {
     let mut lista: Lista = Lista::new();
-    println!("{}", lista.add(Registro { chave: 12 }, 0));
+    println!("{}", lista.add(Registro { chave: 12 }, 2));
 
     println!("{:?}", lista.del(12));
     println!("{}", lista.nro_elem());
